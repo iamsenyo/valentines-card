@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Card</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    :root{
+        --bg:#ffdddd;          /* page background (deep red) */
+        --card:#ffffff;
+        --text:#333;
+        --shadow:0 4px 12px rgba(0,0,0,.1);
+    }
+    body{
+        margin:0; padding:0; 
+        background:var(--bg); 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display:flex; justify-content:center; align-items:center;
+        min-height:100vh; 
+        overflow:hidden; /* hearts that go off‑screen are hidden */
+    }
+    .card{
+        background:var(--card);
+        border-radius:20px;
+        box-shadow:var(--shadow);
+        text-align:center;
+        padding:30px 20px;
+        max-width: 90%;
+        width:400px;
+        position:relative;
+    }
+    .card img{
+        width:80%; max-width:200px;
+        margin-bottom:20px;
+    }
+    .card h1{
+        font-size:1.8rem;
+        color:var(--text);
+        margin:0 0 25px 0;
+    }
+    .buttons{
+        display:flex;
+        justify-content:center;
+        gap:15px;
+    }
+    button{
+        padding:12px 25px;
+        font-size:1rem;
+        border:none;
+        border-radius:30px;
+        cursor:pointer;
+        transition:all .2s ease;
+        box-shadow:var(--shadow);
+    }
+    button#yes{
+        background:#ff4d9a;
+        color:#fff;
+    }
+    button#no{
+        background:#ff99c8;
+        color:#fff;
+    }
+    button:hover{
+        transform:scale(1.05);
+    }
+
+    /* ---------------- Heart Rain ---------------- */
+    @keyframes fall{
+        0%{transform:translateY(-10px) rotate(0deg); opacity:0;}
+        20%{opacity:1;}
+        100%{transform:translateY(110vh) rotate(720deg); opacity:0;}
+    }
+    .heart{
+        position:absolute;
+        top:-10px;
+        font-size:3rem;          /* 200 % larger than the original 1.5rem */
+        color:#8B0000;           /* default deep‑red; overridden inline */
+        animation-timing-function:ease-in-out;
+        pointer-events:none;
+    }
+
+    @media (max-width:500px){
+        .card{padding:20px 15px;}
+        .card h1{font-size:1.5rem;}
+    }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+    <img src="data:image/jpeg;base64,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" alt="Teddy Bear with Heart">
+    <h1>Will you be my Valentine? ❤️</h1>
+    <div class="buttons">
+        <button id="yes">Yes</button>
+        <button id="no">No</button>
+    </div>
+</div>
+
+<script>
+/* ---------- No button teleport logic ---------- */
+const noBtn = document.getElementById('no');
+function teleport(){
+    const card = document.getElementById('card');
+    const cardRect = card.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    const maxX = cardRect.width - btnRect.width;
+    const maxY = cardRect.height - btnRect.height;
+
+    const randX = Math.random() * maxX;
+    const randY = Math.random() * maxY;
+
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = `${randX}px`;
+    noBtn.style.top = `${randY}px`;
+}
+noBtn.addEventListener('mouseenter', teleport);
+noBtn.addEventListener('click', teleport);
+
+/* ---------- Yes button action ---------- */
+const yesBtn = document.getElementById('yes');
+yesBtn.addEventListener('click', function(){
+    const card = document.getElementById('card');
+    // Hide question & buttons
+    card.querySelector('h1').style.display = 'none';
+    card.querySelector('.buttons').style.display = 'none';
+
+    // Add message
+    const msg = document.createElement('p');
+    msg.style.fontSize = '1.1rem';
+    msg.style.color = '#444';
+    msg.style.lineHeight = '1.4';
+    msg.style.marginTop = '20px';
+    msg.innerText = "Congratulations on surviving another year of my nonsense. You deserve a trophy, but all I got you was this card .";
+    card.appendChild(msg);
+
+    /* ------------- Start heart rain in seven pink shades ------------- */
+    startHeartRain('#FFC0CB'); // Pink
+    startHeartRain('#FFB6C1'); // Light Pink
+    startHeartRain('#FF1493'); // Deep Pink
+    startHeartRain('#FF00FF'); // Magenta
+    startHeartRain('#FF6EB4'); // Pinkish‑red
+    startHeartRain('#FFD1DC'); // Blush Pink
+    startHeartRain('#FFDAB9'); // Peach Puff
+});
+
+/* ---------- Heart Rain logic (colour can be supplied) ---------- */
+function startHeartRain(heartColor = '#8B0000') {
+    const maxInterval = 150;   // spawn a heart every 150 ms
+
+    const heartInterval = setInterval(() => {
+        const heart = document.createElement('span');
+        heart.className = 'heart';
+        heart.textContent = '♥';
+
+        // horizontal start position
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+
+        // <-- set the colour you passed (overrides the CSS colour)
+        heart.style.color = heartColor;
+
+        // random fall duration (4–7 s)
+        const duration = 4 + Math.random() * 3;
+        heart.style.animation = `fall ${duration}s ease-in-out forwards`;
+
+        // put it on the page
+        document.body.appendChild(heart);
+
+        // remove it after the animation completes
+        setTimeout(() => heart.remove(), duration * 1000);
+    }, maxInterval);
+}
+</script>
+</body>
+</html>
